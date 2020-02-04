@@ -65,3 +65,52 @@ int main(){
 	cout<<ans<<endl;
 	return 0;
 }
+
+
+////////////////////////////////   BOTTOM UP //////////////////////////////////////////
+
+#include<bits/stdc++.h>
+using namespace std;
+#define inf 100000000000000000
+#define ll long long int
+#define pb push_back
+#define f first
+#define s second
+#define mod 100000000
+#define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
+void mahakal(){
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt","r",stdin);
+	freopen("output.txt","w",stdout);
+	freopen("error.txt","w",stderr);
+	#endif
+}
+ll dp[102][12][102][12];
+int main(){
+	mahakal();fast;
+    ll n , m , p , q;
+    cin>>n>>m>>p>>q;
+    dp[0][0][0][0]=1;
+    for(ll i=0;i<=n;i++){
+    	for(ll j=0 ;j<= m ;j++){
+    		for(ll k1 =0 ;k1<=p ;k1++){
+    			if(k1 > i)break;
+    			for(ll k2 =0 ;k2<=q ;k2++){
+    				if(k2>j)break;
+    				dp[i+1][k1+1][j][0]+=dp[i][k1][j][k2]%mod;
+    				dp[i][0][j+1][k2+1]+=dp[i][k1][j][k2]%mod;
+    			}
+    		}
+    	}
+    }
+    ll ans = 0 ;
+    for(ll i=0 ;i<=p ;i++){
+    	for(ll j=0;j<=q ; j++){
+    		ans += dp[n][i][m][j]%mod;
+    		ans = ans % mod;
+    	}
+    }
+    cout<<ans<<endl;
+
+	return 0;
+}
